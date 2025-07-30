@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+
 class Tela:
     def __init__(self, master):
         self.janela = master
@@ -44,6 +45,19 @@ class Tela:
         self.btn_editar = ttk.Button(self.frm_botoes, text='Editar',
                                      command=self.editar)
         self.btn_editar.grid(row=0, column=2)
+        self.centraliza(self.janela)
+
+    def centraliza(self, master):
+        # Criar uma forma de centralizar a janela
+
+        largura_monitor = master.winfo_screenwidth()
+        altura_monitor = master.winfo_screenheight()
+        master.update_idletasks()
+        largura_janela = master.winfo_width()
+        altura_janela = master.winfo_height()
+        x = largura_monitor // 2 - largura_janela // 2
+        y = altura_monitor //2 - altura_janela // 2
+        master.geometry(f'{largura_janela}x{altura_janela}+{x}+{y}')
 
     def excluir(self):
         itens = self.tvw.selection()
@@ -119,6 +133,7 @@ class Tela:
                                                       'Cadastro',
                                                  command=self.confirmar_cadastro).grid(row=3,
                                                                        column=0, columnspan=2, sticky='we')
+        self.centraliza(self.top_cadastrar)
 
     def confirmar_cadastro(self):
         nome = self.ent_nome.get()
