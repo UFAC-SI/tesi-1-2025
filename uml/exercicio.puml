@@ -1,0 +1,48 @@
+@startuml
+'O cliente deve ser capaz de realizar cadastro no sistema.
+'Depois de autenticado, pode navegar pelos produtos,
+'adicionar itens ao carrinho, visualizar o carrinho e realizar um pedido.
+'Ao realizar um pedido, o sistema deve obrigatoriamente validar o estoque
+'antes de prosseguir com a compra.
+'O sistema deve se comunicar com um Sistema de Pagamento externo para
+'processar a transação.
+'Após a finalização do pedido, o cliente pode acompanhar o status da entrega.
+'O administrador, por sua vez, deve ser capaz de:
+'Cadastrar e remover produtos do catálogo
+'Atualizar preços e descrições
+'Gerenciar pedidos (consultar, cancelar ou confirmar)
+'
+'Cenários Alternativos
+'Ao realizar um pedido deve-se validar o estoque.
+'O cliente pode optar por usar um cupom de desconto durante a finalização da compra.
+'Ao finalizar um pedido deve-se incluir a comunicação com o Sistema de Pagamento.
+'O cliente pode salvar produtos em uma lista de desejos.
+'Atores
+left to right direction
+actor Cliente
+actor Sistema_de_Pagamento
+actor Administrador
+'Verbos
+rectangle "Sistemas Compras"{
+
+Cliente -- (Navegar pelos Produtos)
+(Navegar pelos Produtos) <.. (Adicionar Itens) : <<extend>>
+'Cliente -- (Adicionar Itens)
+Cliente -- (Visualizar Carrinho)
+Cliente -- (Realizar Pedido)
+(Realizar Pedido) ..> (Validar Estoque) : <<include>>
+(Realizar Pedido) ..> (Comunicar Pagamento)
+Cliente -- (Realizar Cadastro)
+(Comunicar Pagamento) -- Sistema_de_Pagamento
+Cliente -- (Acompanhar Entrega)
+(Gerenciar Produto) -- Administrador
+(Gerenciar Pedido) -- Administrador
+(Realizar Pedido) <.. (Usar Cupom) : <<extend>>
+(Navegar pelos Produtos) <.. (Salvar Desejos) : <<extend>>
+(Realizar Cadastro) -[hidden]- (Gerenciar Produto)
+(Acompanhar Entrega) -[hidden]- (Gerenciar Pedido)
+note left of (Gerenciar Pedido) : Gerenciar envolve\n operações CRUD
+
+}
+
+@enduml

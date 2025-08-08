@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+actor Usuario
+
+(Realizar Cadastro) as UC01 #lightgreen;line:black;line.bold;
+(Validar Senha) as UC02
+(Autocompletar Endereço) as UC03
+Usuario -- UC01
+UC01 .> UC02 : <<include>>
+UC01 <.. UC03 : <<extend>>
+
+note right of Usuario : Nota explicativa.
+
+'note right of (Use)
+'A note can also
+'be on several lines
+'end note
+
+'note "This note is connected\nto several objects." as N2
+
+@enduml
