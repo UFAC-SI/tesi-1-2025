@@ -6,7 +6,6 @@ class Model:
         self.con = conexao.Conexao()
 
     def get(self, sql):
-        #sql = "SELECT * FROM cliente;"
         try:
             con = self.con.get_conexao()
             cursor = con.cursor()
@@ -17,8 +16,6 @@ class Model:
             print(er)
 
     def insert(self, sql):
-        #sql = "INSERT INTO cliente (nome, cpf, email) VALUES ('TESTE',
-        # '00000000000', 'teste@ufac.br');"
         try:
             con = self.con.get_conexao()
             cursor = con.cursor()
@@ -26,10 +23,23 @@ class Model:
             if cursor.rowcount == 1: #Quantidade de linhas afetadas
                 con.commit()
             con.close()
+            return cursor.rowcount
         except Error as er:
             print(er)
 
-model = Model()
-sql = "SELECT * FROM cliente;"
-for i in model.get(sql):
-    print(i)
+    def delete(self, sql):
+        try:
+            con = self.con.get_conexao()
+            cursor = con.cursor()
+            cursor.execute(sql)
+            if cursor.rowcount == 1:
+                con.commit()
+            con.close()
+            return cursor.rowcount
+        except Error as er:
+            print(er)
+
+# model = Model()
+# sql = "SELECT * FROM cliente;"
+# for i in model.get(sql):
+#     print(i)
